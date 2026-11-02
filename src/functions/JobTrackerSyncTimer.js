@@ -102,10 +102,10 @@ const handleScope = (scope, vendor) => {
 		"misc equipment",
 		"residential shades",
 		"toilet accessories",
-        "residential vdb",
-        "wall protection",
-        "wall pro",
-    );
+		"residential vdb",
+		"wall protection",
+		"wall pro",
+	);
 	const formattedScope = immutableScopes.has(scope.toLowerCase());
 };
 
@@ -120,7 +120,7 @@ app.http("JobTrackerSyncTimer", {
 
 			const rawJobData = (
 				await getBlobAsJson(baseClient, context)
-			).filter((r) => r["Job Name"] || r["Scope"]);
+			).filter((r) => r["Job Name"] && r["Scope"]);
 
 			const cleanedJobData = rawJobData.map((jobData) => {
 				const {
@@ -184,12 +184,12 @@ app.http("JobTrackerSyncTimer", {
 					Overdue,
 					QuoteExpRate: handleDate(QED),
 					Resp: handleResp(Resp),
-					Scope: "", // Ask Ryan
+					Scope,
 					Status: trunc(Status, 1000),
 					TrackingNumber,
-					Urgency,
+					Urgency: Urgency ?? "-",
 					Urgent,
-					Vendor: VendManu, // Ask Ryan,
+					Vendor: VendManu,
 					VendorAcknowledgement,
 					VendorShipDate,
 					Watch,
@@ -202,10 +202,13 @@ app.http("JobTrackerSyncTimer", {
 				`Cleaned ${cleanedJobData.length} rows -> ${cleanedJsonLocation}`,
 			);
 
-			return { status: 200, jsonBody: {
+			return {
+				status: 200,
+				jsonBody: {
 					count: cleanedJobData.length,
 					fileName: cleanedJsonLocation,
-				} };
+				},
+			};
 		} catch (err) {
 			context.error("JobTrackerSyncTimer failed", err);
 			return { status: 500, body: String(err) };
