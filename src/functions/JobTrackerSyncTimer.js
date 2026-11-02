@@ -122,7 +122,7 @@ app.http("JobTrackerSyncTimer", {
 				await getBlobAsJson(baseClient, context)
 			).filter((r) => r["Job Name"] && r["Scope"]);
 
-			const cleanedJobData = rawJobData.map((jobData) => {
+			const cleanedJobData = rawJobData.map((jobData, seq) => {
 				const {
 					Company,
 					"ACK Date": ACKDate,
@@ -192,7 +192,8 @@ app.http("JobTrackerSyncTimer", {
 					Vendor: VendManu,
 					VendorAcknowledgement,
 					VendorShipDate,
-					Watch,
+                    Watch,
+                    Seq: seq
 				};
 			});
 
