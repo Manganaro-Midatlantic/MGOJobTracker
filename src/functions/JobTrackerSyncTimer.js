@@ -127,8 +127,8 @@ app.http("JobTrackerSyncTimer", {
 					Company,
 					"ACK Date": ACKDate,
 					"ACK Number": ACKNum,
-					// Contract
-					//Customer
+					Contract,
+					Customer,
 					"Date Approved": DateApproved,
 					"Date Needed": DateNeeded,
 					"Date Released": DateReleased,
@@ -165,7 +165,7 @@ app.http("JobTrackerSyncTimer", {
 					ACKDate: handleDate(ACKDate),
 					ACKNum: trunc(ACKNum, 20),
 					Contract: Contract ?? null,
-					Customer: "",
+					Customer: Customer ?? "",
 					DateApproved: handleDate(DateApproved),
 					DateNeeded: handleDate(DateNeeded),
 					DateReleased: handleDate(DateReleased),
