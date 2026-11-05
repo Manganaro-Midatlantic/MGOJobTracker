@@ -197,7 +197,7 @@ app.http("JobTrackerSyncTimer", {
 				};
 			});
 
-			const cleanedJsonLocation = `cleaned/job-tracking-${new Date().toISOString()}.json`;
+			const cleanedJsonLocation = `cleaned/job-tracking-${new Date().toISOString().slice(0, 10)}.json`;
 			await uploadJsonBlob(cleanedJsonLocation, cleanedJobData);
 			context.log(
 				`Cleaned ${cleanedJobData.length} rows -> ${cleanedJsonLocation}`,
