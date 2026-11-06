@@ -192,12 +192,12 @@ app.http("JobTrackerSyncTimer", {
 					Vendor: VendManu,
 					VendorAcknowledgement,
 					VendorShipDate,
-                    Watch,
-                    Seq: seq
+					Watch,
+					Seq: seq,
 				};
 			});
 
-			const cleanedJsonLocation = `cleaned/job-tracking-${new Date().toISOString().slice(0, 10)}.json`;
+			const cleanedJsonLocation = `cleaned/job-tracking-${new Date().toLocaleDateString("en-CA", { timeZone: "America/New_York" })}.json`;
 			await uploadJsonBlob(cleanedJsonLocation, cleanedJobData);
 			context.log(
 				`Cleaned ${cleanedJobData.length} rows -> ${cleanedJsonLocation}`,
